@@ -1,0 +1,13 @@
+{
+    "name": "FOS Calc",
+    "description": "Just a simple calculator for Firefox OS that can be used with all screen",
+    "launch_path": "/foscalc",
+    "icons": {
+        "128": "/foscalc/img/icon-128.png"
+    },
+    "developer": {
+        "name": "Vincent Billey",
+        "url": "http://vincent.billey.me"
+    },
+    "default_locale": "en"
+}
