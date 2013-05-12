@@ -57,6 +57,12 @@ body {
     font-size: 5em;
     text-align: right;
     overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
+}
+
+#screen-text {
+    float: right;
 }
 
 .button {

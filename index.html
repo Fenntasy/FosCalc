@@ -12,41 +12,20 @@
                 <button id="install">
                     Install this awesome app on your homescreen!
                 </button>
+                <div id="screen-text">
+                </div>
             </div>
         </header>
         <table>
             <tr>
-                <td>
-                    <div class="button"><div class="content">MC</div></div>
+                <td colspan=2>
+                    <div class="button double-width"><div class="content">clear</div></div>
                 </td>
-                <td>
-                    <div class="button"><div class="content">MR</div></div>
-                </td>
-                <td>
-                    <div class="button"><div class="content">MS</div></div>
-                </td>
-                <td>
-                    <div class="button"><div class="content">M+</div></div>
-                </td>
-                <td>
-                    <div class="button"><div class="content">M-</div></div>
-                </td>
-            </tr>
-            <tr>
                 <td>
                     <div class="button"><div class="content">←</div></div>
                 </td>
                 <td>
-                    <div class="button"><div class="content">CE</div></div>
-                </td>
-                <td>
-                    <div class="button"><div class="content">C</div></div>
-                </td>
-                <td>
-                    <div class="button"><div class="content">+-</div></div>
-                </td>
-                <td>
-                    <div class="button"><div class="content">√</div></div>
+                    <div class="button"><div class="content">/</div></div>
                 </td>
             </tr>
             <tr>
@@ -60,10 +39,7 @@
                     <div class="button"><div class="content">9</div></div>
                 </td>
                 <td>
-                    <div class="button"><div class="content">/</div></div>
-                </td>
-                <td>
-                    <div class="button"><div class="content">%</div></div>
+                    <div class="button"><div class="content">*</div></div>
                 </td>
             </tr>
             <tr>
@@ -77,10 +53,7 @@
                     <div class="button"><div class="content">6</div></div>
                 </td>
                 <td>
-                    <div class="button"><div class="content">*</div></div>
-                </td>
-                <td>
-                    <div class="button"><div class="content">1/x</div></div>
+                    <div class="button"><div class="content">-</div></div>
                 </td>
             </tr>
             <tr>
@@ -94,72 +67,62 @@
                     <div class="button"><div class="content">3</div></div>
                 </td>
                 <td>
-                    <div class="button"><div class="content">-</div></div>
-                </td>
-                <td rowspan=2>
-                    <div class="button double-height"><div class="content">=</div></div>
+                    <div class="button"><div class="content">+</div></div>
                 </td>
             </tr>
             <tr>
-                <td colspan=2>
-                    <div class="button double-width"><div class="content">0</div></div>
+                <td>
+                    <div class="button"><div class="content">0</div></div>
                 </td>
                 <td>
                     <div class="button"><div class="content">.</div></div>
                 </td>
-                <td>
-                    <div class="button"><div class="content">+</div></div>
+                <td colspan=2>
+                    <div class="button double-width"><div class="content">=</div></div>
                 </td>
             </tr>
         </table>
     </section>
     <script>
         (function(){
+            // get a reference to the button and call install() on click
+            var button = document.getElementById('install');
+
             var buttons = document.getElementsByClassName('button');
-            var screen = document.getElementById('screen');
+            var screen_container = document.getElementById('screen');
+            var screen = document.getElementById('screen-text');
             var calc = '';
+            var font_size = 5;
             var buttonClicked = function() {
+                button.style.display = "none";
                 var item = this.children.item(0).innerHTML;
                 switch(item) {
                     case '=':
                         if (calc) {
                             calc = eval(calc);
                         }
+                        screen_container.style.fontSize = font_size + 'em';
                         break;
-                    case 'MC':
-                    case 'MR':
-                    case 'MS':
-                    case 'M+':
-                    case '←':
-                    case 'CE':
+                    case 'clear':
                         calc = '';
-                    case 'C':
+                        font_size = 5;
+                        break;
+                    case '←':
                         calc = calc.substr(0, calc.length - 1);
-                    case '+-':
-                    case '√':
-                    case '%':
-                    case '1/x':
-                        break;
-                    case '/':
-                    case '*':
-                    case '-':
-                    case '+':
-                        calc += item;
-                        break;
                         break;
                     default:
                         calc += item;
                         break;
                 }
                 screen.innerHTML = calc;
+                if (screen_container.offsetWidth < screen.offsetWidth && font_size > 1) {
+                    screen_container.style.fontSize = --font_size + 'em';
+                }
             }
             for (var i = 0; i < buttons.length; i++) {
-                console.log(i);
-                buttons[i].addEventListener('click', buttonClicked, false);
+                buttons[i].addEventListener('touchend', buttonClicked, false);
+//                buttons[i].addEventListener('click', buttonClicked, false);
             }
-
-            // get a reference to the button and call install() on click
-            var button = document.getElementById('install');
             button.addEventListener('click', install, false);
 
             var request = navigator.mozApps.checkInstalled("http://vincent.billey.me/foscalc/manifest.webapp");
