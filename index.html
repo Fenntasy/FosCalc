@@ -9,9 +9,6 @@
     <section id="calculator">
         <header id="screen-container">
             <div id="screen">
-                <button id="install">
-                    Install this awesome app on your homescreen!
-                </button>
                 <div id="screen-text">
                 </div>
             </div>
@@ -121,40 +118,7 @@
             }
             for (var i = 0; i < buttons.length; i++) {
                 buttons[i].addEventListener('touchend', buttonClicked, false);
-//                buttons[i].addEventListener('click', buttonClicked, false);
             }
-            button.addEventListener('click', install, false);
-
-            var request = navigator.mozApps.checkInstalled("http://vincent.billey.me/foscalc/manifest.webapp");
-            request.onsuccess = function() {
-                if (request.result) {
-                    // we're installed
-                    button.style.display = "none";
-                } else {
-                    // not installed
-                    button.style.display = "show";
-                }
-            };
-            request.onerror = function() {
-                alert('Error checking installation status: ' + this.error.message);
-            };
-
-            function install(ev) {
-                ev.preventDefault();
-                // define the manifest URL
-                var manifest_url = "http://vincent.billey.me/foscalc/manifest.webapp";
-                // install the app
-                var myapp = navigator.mozApps.install(manifest_url);
-                myapp.onsuccess = function(data) {
-                    // App is installed, remove button
-                    this.parentNode.removeChild(this);
-                };
-                myapp.onerror = function() {
-                    // App wasn't installed, info is in
-                    // installapp.error.name
-                    alert(myapp.error.name);
-                };
-            };
         })();
     </script>
 </body>
